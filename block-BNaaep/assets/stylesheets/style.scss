@@ -1,0 +1,47 @@
+@import "reset";
+
+body {
+  line-height: 1.5;
+  text-align: center;
+  margin: 0;
+  padding: 3rem;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: 1.3rem;
+  color: gray;
+}
+
+p {
+  text-align: justify;
+}
+
+.display {
+  margin: 4rem 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1fr;
+  img {
+    width: 250px;
+    border-radius: 0.5rem;
+  }
+  h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: rgb(61, 60, 60);
+  }
+}
+
+.about {
+  text-align: left;
+  img {
+    width: 200px;
+  }
+}
