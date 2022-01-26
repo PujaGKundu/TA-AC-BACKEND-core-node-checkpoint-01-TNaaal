@@ -9,7 +9,6 @@ var userPath = __dirname + "/contacts/";
 
 function handleRequest(req, res) {
   let parsedURl = url.parse(req.url, true);
-  console.log(parsedURl.query);
 
   let pathname = parsedURl.pathname;
 
@@ -58,12 +57,35 @@ function handleRequest(req, res) {
 
     //To display users
     else if (pathname === "/users" && req.method === "GET") {
-      var username = parsedURl.query.username;
-      fs.readFile(userPath + username + ".json", (err, content) => {
-        if (err) return console.log(err);
-        res.setHeader("Content-Type", "application/json");
-        return res.end(content);
-      });
+      if (!req.url.includes("?")) {
+        fs.readdir(userPath, function (err, files) {
+          //handling error
+          if (err) {
+            return console.log("Unable to scan directory: " + err);
+          }
+          var length = files.length;
+          var count = 1;
+          files.forEach(function (file) {
+            console.log(file);
+            fs.readFile(userPath + file, (err, content) => {
+              if (err) return console.log(err);
+              if (count < length) {
+                count++;
+                res.write(content);
+              } else {
+                return res.end(content);
+              }
+            });
+          });
+        });
+      } else {
+        var username = parsedURl.query.username;
+        fs.readFile(userPath + username + ".json", (err, content) => {
+          if (err) return console.log(err);
+          res.setHeader("Content-Type", "application/json");
+          return res.end(content);
+        });
+      }
     }
 
     //To get user
